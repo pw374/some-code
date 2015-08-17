@@ -31,6 +31,21 @@ struct
       g (A(n+1, g)) tl
   let length l = f (A(0, f)) l
   (* 'rec' is actually handled by 'type', which implies 'rec' *)
-      
+
+  let test = length [2;3;4;4]
+end
+
+(** deported recursion, tailrec, without using the keyword 'rec',
+    and without defining a type. *)
+module C : ListLength =
+struct
+  let f (`A (n, g)) l =
+    match l with
+    | [] -> n
+    | _ :: tl ->
+      g (`A(n+1, g)) tl
+  let length l = f (`A(0, f)) l
+  (* same as module B, but using polymorphic variants *)
+
   let test = length [2;3;4;4]
 end
